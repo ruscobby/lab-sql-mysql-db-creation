@@ -1,38 +1,40 @@
-Use automobiles;
-DROP TABLE IF EXISTS cars;
+USE autos;
 CREATE TABLE cars (
-	id INT PRIMARY KEY,
-    vehicle_identification_number VARCHAR(255),
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    vin VARCHAR(50) NOT NULL,
     manufacturer VARCHAR(255),
-    year DATE,
-    colour VARCHAR(255)
-    );
-    
-  CREATE TABLE sales_persons (
-    staff_id INT PRIMARY KEY,
-    name VARCHAR(255),
-    store VARCHAR(255)
-   );
-   
-   CREATE TABLE customers (
-    id INT PRIMARY KEY,
-    name VARCHAR(255),
-    phone_number VARCHAR(255),
-    e_mail VARCHAR(255),
-    address VARCHAR(255),
- 	city VARCHAR(255),
-    state_province VARCHAR(255),
-    country VARCHAR(255),
-    zip_postal_code INT
-    );
+    model VARCHAR(255),
+    year INT,
+    color VARCHAR(50)
+);
 
-CREATE TABLE invoice (
-    invoice_number INT PRIMARY KEY,
+CREATE TABLE customers (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cust_name VARCHAR(100),
+    cust_phone VARCHAR(50),
+    cust_email VARCHAR(100),
+    cust_address VARCHAR(200),
+    cust_city VARCHAR(50),
+    cust_state VARCHAR(50),
+    cust_country VARCHAR(50),
+    cust_zipcode VARCHAR(20)
+);
+
+CREATE TABLE salespersons (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    staff_id VARCHAR(10) UNIQUE,
+    name VARCHAR(100),
+    store VARCHAR(50)
+);
+
+CREATE TABLE invoices (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    invoice_number BIGINT,
     date DATE,
-    car VARCHAR(255),
-    customer INT,
-    staff_id INT, 	
-    FOREIGN KEY (car) REFERENCES cars(vehicle_identification_number),
-    FOREIGN KEY (customer) REFERENCES customers(id),
-    FOREIGN KEY (staff_id) REFERENCES sales_persons(staff_id)
+    car_id INT,
+    customer_id INT,
+    salesperson_id INT,
+    FOREIGN KEY (car_id) REFERENCES cars(id),
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (salesperson_id) REFERENCES salespersons(id)
 );
